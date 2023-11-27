@@ -52,29 +52,29 @@ std::string TAriOps::createPostfixForm()
 				else {
 					char op = stack.pop();
 					push(stack, op);
-					if (prioritet(line[i]) > prioritet(op)) {
-						push(stack, line[i]);
-					}
-
-					else {
+					if (line[i] == ')') {
 						op = stack.pop();
-						if (op == '(')
-							push(stack, op);
-						else do {
+						while (!stack.isEmpty() && op != '(') {
 							postfixLine += op;
 							if (!stack.isEmpty()) {
 								op = stack.pop();
 							}
-						} while (!stack.isEmpty() && op != '(');
-						/*while (!stack.isEmpty() && op != '(') {
-							postfixLine += op;
-							op = stack.pop();
-						}*/
-						if (line[i] != ')') {
-							if (op == '(')
-								push(stack, op);
-							push(stack, line[i]);
 						}
+					}
+					else {
+						if (prioritet(line[i]) <= prioritet(op)) {
+							op = stack.pop();
+							do {
+								postfixLine += op;
+								if (!stack.isEmpty()) {
+									op = stack.pop();
+								}
+							} while (!stack.isEmpty() && op == '(');
+							if (op == '(') {
+								push(stack, op);
+							}
+						}
+						push(stack, line[i]);
 					}
 				}
 			}

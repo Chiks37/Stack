@@ -12,7 +12,10 @@ void main() {
 	TAriOps b(str2);
 	std::string str3 = "((2+1)/(9-3)+2)+5-2-2*(5-4)+7";
 	TAriOps c(str3);
-	std::cout << "Infix line:   " << str1 << "\nPostfix line: " << a.createPostfixForm() << "\nSolution:    " << a.solvePostfixForm(str1)
-		<< "\n\nInfix line:   " << str2 << "\nPostfix line: " << b.createPostfixForm() << "\nSolution:    " << b.solvePostfixForm(str2)
-		<< "\n\nInfix line:   " << str3 << "\nPostfix line: " << c.createPostfixForm() << "\nSolution:    " << c.solvePostfixForm(str3) << std::endl;
+	std::cout << "Infix line:   " << str1 << "\nPostfix line: " << a.createPostfixForm() << "\nSolution:    " << a.solvePostfixForm(str1);
+	std::cout << "\n\nInfix line:   " << str2 << "\nPostfix line: " << b.createPostfixForm() << "\nSolution:    " << b.solvePostfixForm(str2);
+	std::cout << "\n\nInfix line:   " << str3 << "\nPostfix line: " << c.createPostfixForm() << "\nSolution:    " << c.solvePostfixForm(str3);
+	std::string str4 = "1+2*(3-2)-4";
+	TAriOps d(str4);
+	std::cout << "\n\nInfix line:   " << str4 << "\nPostfix line: " << d.createPostfixForm() << "\nSolution:    " << c.solvePostfixForm(str3) << std::endl;
 }
