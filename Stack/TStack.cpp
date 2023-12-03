@@ -2,17 +2,17 @@
 
 TStack::TStack() : top(0), size(1)
 {
-	pMem = new char[size];
+	pMem = new double[size];
 }
 
 TStack::TStack(const size_t& _size) : top(0), size(_size)
 {
-	pMem = new char[size];
+	pMem = new double[size];
 }
 
 TStack::TStack(const TStack& op2) : size(op2.size), top(op2.top)
 {
-	pMem = new char[size];
+	pMem = new double[size];
 	for (int i = 0; i < size; i++) {
 		pMem[i] = op2.pMem[i];
 	}
@@ -34,7 +34,7 @@ TStack& TStack::operator=(const TStack& op2)
 		if (size != op2.size) {
 			delete[] pMem;
 			size = op2.size;
-			pMem = new char[size];
+			pMem = new double[size];
 		}
 		if (top != op2.top) {
 			top = op2.top;
@@ -46,12 +46,12 @@ TStack& TStack::operator=(const TStack& op2)
 	return *this;
 }
 
-void TStack::push(char num)
+void TStack::push(double num)
 {
 	pMem[top++] = num;
 }
 
-char TStack::pop()
+double TStack::pop()
 {
 	return pMem[--top];
 }

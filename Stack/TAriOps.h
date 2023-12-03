@@ -5,15 +5,16 @@
 class TAriOps
 {
 	std::string line;
+	std::string postfixLine;
 	size_t errorQuantity;
 	//TStack stack;
 	bool isBracketsCorrect();
-	void push(TStack& stack, const int& num);
+	void push(TStack& stack, const double& num);
 public:
 	TAriOps();
 	TAriOps(std::string _line);
 	std::string createPostfixForm();
-	int solvePostfixForm(const std::string& postfixLine);
-	int prioritet(const char& c);
+	double solvePostfixForm(/*const std::string& postfixLine*/);
+	int prioritet(const double &c);
 };
 

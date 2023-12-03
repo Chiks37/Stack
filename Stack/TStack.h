@@ -1,7 +1,7 @@
 #pragma once
 class TStack
 {
-	char* pMem;
+	double* pMem;
 	size_t size;
 	size_t top;
 public:
@@ -10,8 +10,8 @@ public:
 	TStack(const TStack& op2);
 	~TStack();
 	TStack& operator= (const TStack& op2);
-	void push(char num);
-	char pop();
+	void push(double num);
+	double pop();
 	bool isEmpty();
 	bool isFull();
 };

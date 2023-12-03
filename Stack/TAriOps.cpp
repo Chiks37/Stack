@@ -19,7 +19,7 @@ bool TAriOps::isBracketsCorrect()
 	return res;
 }
 
-void TAriOps::push(TStack& stack, const int& num)
+void TAriOps::push(TStack& stack, const double& num)
 {
 	if (!stack.isFull()) {
 		stack.push(num);
@@ -39,7 +39,7 @@ TAriOps::TAriOps(std::string _line) : line(_line), errorQuantity(0)//, stack()
 
 std::string TAriOps::createPostfixForm()
 {
-	std::string postfixLine;
+	//std::string postfixLine;
 	TStack stack(line.size());
 	if (isBracketsCorrect()) {
 		for (int i = 0; line[i] != '\0'; i++) {
@@ -50,7 +50,7 @@ std::string TAriOps::createPostfixForm()
 				}
 
 				else {
-					char op = stack.pop();
+					double op = stack.pop();
 					push(stack, op);
 					if (line[i] == ')') {
 						op = stack.pop();
@@ -63,15 +63,28 @@ std::string TAriOps::createPostfixForm()
 					}
 					else {
 						if (prioritet(line[i]) <= prioritet(op)) {
+							bool isOpWroten = false;
 							op = stack.pop();
 							do {
 								postfixLine += op;
 								if (!stack.isEmpty()) {
 									op = stack.pop();
+									if (stack.isEmpty()) {
+										isOpWroten = false;
+									}
+									else {
+										isOpWroten = true;
+									}
+								}
+								else {
+									isOpWroten = true;
 								}
 							} while (!stack.isEmpty() && op == '(');
 							if (op == '(') {
 								push(stack, op);
+							}
+							else if (!isOpWroten) {
+								postfixLine += op;
 							}
 						}
 						push(stack, line[i]);
@@ -83,7 +96,7 @@ std::string TAriOps::createPostfixForm()
 			}
 		}
 		while (!stack.isEmpty()) {
-			char op = stack.pop();
+			double op = stack.pop();
 			postfixLine += op;
 		}
 	}
@@ -93,43 +106,46 @@ std::string TAriOps::createPostfixForm()
 	return postfixLine;
 }
 
-int TAriOps::solvePostfixForm(const std::string& postfixLine)
+double TAriOps::solvePostfixForm(/*const std::string& postfixLine*/)
 {
 	TStack stack(postfixLine.size());
-	int res = 0;
-	for (int i = 0; postfixLine[i] != '\0'; i++) {
-		if (!( postfixLine[i] == '+' || postfixLine[i] == '-' || postfixLine[i] == '*' || postfixLine[i] == '/')) {
-			push(stack, postfixLine[i]);
-		}
-		else {
-			if (!stack.isEmpty()) {
-				int op2 = stack.pop();
-				if (!stack.isEmpty()) {
-					int op1 = stack.pop();
-					switch (postfixLine[i]) {
-					case '+':
-						res += op1 + op2;
-						break;
-					case '-':
-						res += op1 - op2;
-						break;
-					case '*':
-						res += op1 * op2;
-						break;
-					case '/':
-						res += op1 / op2;
-						break;
-					}
-
-				}
+	double res = 0;
+	for (double i = 0; postfixLine[i] != '\0'; i++) {
+		if (postfixLine[i] != ' ') {
+			if (!(postfixLine[i] == '+' || postfixLine[i] == '-' || postfixLine[i] == '*' || postfixLine[i] == '/')) {
+				push(stack, postfixLine[i] - '0');
 			}
+			else {
+				if (!stack.isEmpty()) {
+					double op2 = stack.pop();
+					if (!stack.isEmpty()) {
+						double op1 = stack.pop();
+						switch (postfixLine[i]) {
+						case '+':
+							res = op1 + op2;
+							break;
+						case '-':
+							res = op1 - op2;
+							break;
+						case '*':
+							res = op1 * op2;
+							break;
+						case '/':
+							res = op1 / op2;
+							break;
+						}
+						push(stack, res);
 
+					}
+				}
+
+			}
 		}
 	}
 	return res;
 }
 
-int TAriOps::prioritet(const char& c)
+int TAriOps::prioritet(const double& c)
 {
 	int res;
 	if (c == '(')
