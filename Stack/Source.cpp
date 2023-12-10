@@ -2,6 +2,13 @@
 #include "TStack.h"
 #include "TAriOps.h"
 
+
+//Errors list: 
+//1 - brakets
+//2 - not enough operands
+//3 - divide by zero
+//4 - not enough operations
+
 void main() {
 	//TStack stack(3);
 	//stack.push(1);

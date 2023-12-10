@@ -56,6 +56,7 @@ std::string TAriOps::createPostfixForm()
 						op = stack.pop();
 						while (!stack.isEmpty() && op != '(') {
 							postfixLine += op;
+							postfixLine += ' ';
 							if (!stack.isEmpty()) {
 								op = stack.pop();
 							}
@@ -67,6 +68,7 @@ std::string TAriOps::createPostfixForm()
 							op = stack.pop();
 							do {
 								postfixLine += op;
+								postfixLine += ' ';
 								if (!stack.isEmpty()) {
 									op = stack.pop();
 									if (stack.isEmpty()) {
@@ -85,6 +87,7 @@ std::string TAriOps::createPostfixForm()
 							}
 							else if (!isOpWroten) {
 								postfixLine += op;
+								postfixLine += ' ';
 							}
 						}
 						push(stack, line[i]);
@@ -93,15 +96,17 @@ std::string TAriOps::createPostfixForm()
 			}
 			else {
 				postfixLine += line[i];
+				postfixLine += ' ';
 			}
 		}
 		while (!stack.isEmpty()) {
 			double op = stack.pop();
 			postfixLine += op;
+			postfixLine += ' ';
 		}
 	}
 	else {
-		std::cout << "Bracket count is uncorrect";
+		throw 1;
 	}
 	return postfixLine;
 }
@@ -131,16 +136,30 @@ double TAriOps::solvePostfixForm(/*const std::string& postfixLine*/)
 							res = op1 * op2;
 							break;
 						case '/':
+							if (op2 == 0) {
+								throw 3;
+								break;
+							}
 							res = op1 / op2;
 							break;
 						}
 						push(stack, res);
-
 					}
+					else {
+						throw 2;
+						break;
+					}
+				}
+				else {
+					throw 2;
+					break;
 				}
 
 			}
 		}
+	}
+	if (!stack.isEmpty()) {
+		throw 4;
 	}
 	return res;
 }
