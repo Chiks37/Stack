@@ -16,6 +16,9 @@ bool TAriOps::isBracketsCorrect()
 			break;
 		}
 	}
+	if (lBr > rBr) {
+		res = 0;
+	}
 	return res;
 }
 
@@ -81,7 +84,7 @@ std::string TAriOps::createPostfixForm()
 								else {
 									isOpWroten = true;
 								}
-							} while (!stack.isEmpty() && op == '(');
+							} while (!stack.isEmpty() && op != '(');
 							if (op == '(') {
 								push(stack, op);
 							}
@@ -113,51 +116,65 @@ std::string TAriOps::createPostfixForm()
 
 double TAriOps::solvePostfixForm(/*const std::string& postfixLine*/)
 {
-	TStack stack(postfixLine.size());
+	TStack stack(postfixLine.size() + 1);
 	double res = 0;
 	for (double i = 0; postfixLine[i] != '\0'; i++) {
 		if (postfixLine[i] != ' ') {
 			if (!(postfixLine[i] == '+' || postfixLine[i] == '-' || postfixLine[i] == '*' || postfixLine[i] == '/')) {
+
+				if (postfixLine[i] - '9' > 0 || '0' - postfixLine[i] > 0) {
+					throw 5;
+				}
+
 				push(stack, postfixLine[i] - '0');
 			}
-			else {
+			else{
+
 				if (!stack.isEmpty()) {
+
 					double op2 = stack.pop();
 					if (!stack.isEmpty()) {
 						double op1 = stack.pop();
 						switch (postfixLine[i]) {
+
 						case '+':
 							res = op1 + op2;
 							break;
+
 						case '-':
 							res = op1 - op2;
 							break;
+
 						case '*':
 							res = op1 * op2;
 							break;
+
 						case '/':
 							if (op2 == 0) {
 								throw 3;
-								break;
 							}
 							res = op1 / op2;
 							break;
 						}
+
 						push(stack, res);
 					}
 					else {
 						throw 2;
-						break;
 					}
 				}
 				else {
 					throw 2;
-					break;
 				}
 
 			}
 		}
 	}
+
+	if (!stack.isEmpty()) {
+		stack.pop(); //res
+	}
+
 	if (!stack.isEmpty()) {
 		throw 4;
 	}

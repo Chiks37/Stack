@@ -8,32 +8,53 @@
 //2 - not enough operands
 //3 - divide by zero
 //4 - not enough operations
+void startTest(std::string str) {
+
+	TAriOps obj(str);
+	std::string postLine;
+	double result = 0;
+
+	try {
+		postLine = obj.createPostfixForm();
+		result = obj.solvePostfixForm();
+	}
+
+	catch (int& e) {
+		switch (e) {
+		case 1:
+			std::cout << "Error #1: brackets are incorrect.\n";
+			break;
+		case 2:
+			std::cout << "Error #2: not enough operands.\n";
+			break;
+		case 3:
+			std::cout << "Error #3: divide by zero.\n";
+			break;
+		case 4:
+			std::cout << "Error #4: Not enough operations.\n";
+			break;
+		case 5:
+			std::cout << "Error #5: wrong operands.\n";
+			break;
+		}
+
+	}
+	std::cout << "Infix line:   " << str << "\nPostfix line: " << postLine << "\nSolution:     " << result << "\n\n";
+}
 
 void main() {
-	//TStack stack(3);
-	//stack.push(1);
-	//std::cout << stack.pop();
-	std::string str1 = "2+3*3";
-	TAriOps a(str1);
-	std::string aPostLine = a.createPostfixForm();
-	double aResult = a.solvePostfixForm();
-	std::cout << "Infix line:   " << str1 << "\nPostfix line: " << aPostLine << "\nSolution:    " << aResult;
+	/*char a = 0;	
+	for (int i = 0; i < 256; i++) {
+		std::cout << i << ": " << a++ << '\n';
+	}*/
+	while (true) {
 
-	std::string str2 = "((2+1)/(9-3)+2)*3-7";
-	TAriOps b(str2);
-	std::string bPostLine = b.createPostfixForm();
-	double bResult = b.solvePostfixForm();
-	std::cout << "\n\nInfix line:   " << str2 << "\nPostfix line: " << bPostLine << "\nSolution:    " << bResult;
+		std::cout << "Enter a line >> ";
+		std::string str;
+		std::cin >> str;
+		std::cout << std::endl;
 
-	std::string str3 = "((2+1)/(9-3)+2)+5-2-2*(5-4)+7";
-	TAriOps c(str3);
-	std::string cPostLine = c.createPostfixForm();
-	double cResult = c.solvePostfixForm();
-	std::cout << "\n\nInfix line:   " << str3 << "\nPostfix line: " << cPostLine << "\nSolution:    " << cResult;
+		startTest(str);
+	}
 
-	std::string str4 = "1+2*(3-2)-4";
-	TAriOps d(str4);
-	std::string dPostLine = d.createPostfixForm();
-	double dResult = d.solvePostfixForm();
-	std::cout << "\n\nInfix line:   " << str4 << "\nPostfix line: " << dPostLine << "\nSolution:    " << dResult << std::endl;
 }
