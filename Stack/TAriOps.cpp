@@ -4,19 +4,38 @@ bool TAriOps::isBracketsCorrect()
 {
 	bool res = 1;
 	size_t lBr = 0, rBr = 0;
+	std::cout << "Left brackets         Right brackets\n";
+	int errCount = 0;
+	int bracketsCount = 0;
+	TStack stack(line.size());
 	for (int i = 0; line[i] != '\0'; i++) {
 		if (line[i] == '(') {
-			lBr++;
+			stack.push(++bracketsCount);
 		}
 		else if (line[i] == ')') {
-			rBr++;
+			bracketsCount++;
+			if (!stack.isEmpty()) {
+				std::cout << stack.pop() << "                  " << bracketsCount << std::endl;
+			}
+			else {
+				errCount++;
+				std::cout << 0 << "                  " << bracketsCount << std::endl;
+			}
 		}
-		if (rBr > lBr) {
+		/*if (rBr > lBr) {
 			res = 0;
-			break;
+			errCount++;
 		}
+		else while (rBr > 0) {
+			std::cout << lBr-- << "                  " << rBr-- << std::endl;
+		}*/
 	}
-	if (lBr > rBr) {
+	while (!stack.isEmpty()) {
+		errCount++;
+		std::cout << stack.pop() << "                  " << 0 << std::endl;
+	}
+	std::cout << "Error count: " << errCount << std::endl << std::endl;
+	if (errCount > 0) {
 		res = 0;
 	}
 	return res;
@@ -28,7 +47,7 @@ void TAriOps::push(TStack& stack, const double& num)
 		stack.push(num);
 	}
 	else {
-		std::cout << "Stack is full. Operaion is inpossible.\n";
+		std::cout << "Stack is full. Operaion is impossible.\n";
 	}
 }
 
@@ -66,7 +85,7 @@ std::string TAriOps::createPostfixForm()
 						}
 					}
 					else {
-						if (prioritet(line[i]) <= prioritet(op)) {
+						if (prioritet(line[i]) < prioritet(op)) {
 							bool isOpWroten = false;
 							op = stack.pop();
 							do {
@@ -97,6 +116,7 @@ std::string TAriOps::createPostfixForm()
 					}
 				}
 			}
+			//1+2*3*4
 			else {
 				postfixLine += line[i];
 				postfixLine += ' ';
@@ -128,7 +148,7 @@ double TAriOps::solvePostfixForm(/*const std::string& postfixLine*/)
 
 				push(stack, postfixLine[i] - '0');
 			}
-			else{
+			else {
 
 				if (!stack.isEmpty()) {
 
@@ -192,7 +212,7 @@ int TAriOps::prioritet(const double& c)
 		res = 2;
 	else if (c == '*' || c == ('/'))
 		res = 3;
-	else 
+	else
 		res = -1;
 	return res;
 }

@@ -15,6 +15,6 @@ public:
 	TAriOps(std::string _line);
 	std::string createPostfixForm();
 	double solvePostfixForm(/*const std::string& postfixLine*/);
-	int prioritet(const double &c);
+	int prioritet(const double& c);
 };
 

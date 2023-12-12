@@ -43,7 +43,7 @@ void startTest(std::string str) {
 }
 
 void main() {
-	/*char a = 0;	
+	/*char a = 0;
 	for (int i = 0; i < 256; i++) {
 		std::cout << i << ": " << a++ << '\n';
 	}*/
